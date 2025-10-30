@@ -8,8 +8,8 @@ namespace TiendaApiDto.Repositories
         Task<IEnumerable<Venta>> GetAllAsync();
         Task<Venta?> GetByIdAsync(int id);
         Task<Venta> AddAsync(Venta venta);
-        Task<Venta?> UpdateAsync(long id, Venta venta);
-        Task<bool> DeleteAsync(long id);
+        Task<Venta?> UpdateAsync(int id, Venta venta);
+        Task<bool> DeleteAsync(int id);
 
     }
 }

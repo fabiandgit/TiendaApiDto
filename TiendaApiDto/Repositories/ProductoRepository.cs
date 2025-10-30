@@ -36,7 +36,7 @@ namespace TiendaApiDto.Repositories
             return producto;
         }
 
-        public async Task<Producto?> UpdateAsync(long id, Producto producto)
+        public async Task<Producto?> UpdateAsync(int id, Producto producto)
         {
             var existente = await _context.Productos.FindAsync(id);
             if (existente == null) return null;
@@ -50,7 +50,7 @@ namespace TiendaApiDto.Repositories
             return existente;
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
             if (producto == null) return false;

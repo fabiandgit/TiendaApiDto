@@ -8,8 +8,8 @@ namespace TiendaApiDto.Repositories
         Task<IEnumerable<Empleado>> GetAllAsync();
         Task<Empleado?> GetByIdAsync(int id);
         Task<Empleado> AddAsync(Empleado empleado);
-        Task<Empleado?> UpdateAsync(long id, Empleado empleado);
-        Task<bool> DeleteAsync(long id);
+        Task<Empleado?> UpdateAsync(int id, Empleado empleado);
+        Task<bool> DeleteAsync(int id);
 
     }
 }

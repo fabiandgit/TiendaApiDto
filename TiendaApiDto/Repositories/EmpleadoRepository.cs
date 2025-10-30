@@ -31,7 +31,7 @@ namespace TiendaApiDto.Repositories
             return empleado;
         }
 
-        public async Task<Empleado?> UpdateAsync(long id, Empleado empleado)
+        public async Task<Empleado?> UpdateAsync(int id, Empleado empleado)
         {
             var existente = await _context.Empleados.FindAsync(id);
             if (existente == null) return null;
@@ -46,7 +46,7 @@ namespace TiendaApiDto.Repositories
             return existente;
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var empleado = await _context.Empleados.FindAsync(id);
             if (empleado == null) return false;

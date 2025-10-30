@@ -32,12 +32,12 @@ namespace TiendaApiDto.Repositories
 
         public async Task<Venta> AddAsync(Venta venta)
         {
-            _context.Ventas.Add(venta);
+             _context.Ventas.Add(venta);
             await _context.SaveChangesAsync();
             return venta;
         }
 
-        public async Task<Venta?> UpdateAsync(long id, Venta venta)
+        public async Task<Venta?> UpdateAsync(int id, Venta venta)
         {
             var existente = await _context.Ventas.FindAsync(id);
             if (existente == null) return null;
@@ -52,7 +52,7 @@ namespace TiendaApiDto.Repositories
             return existente;
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var venta = await _context.Ventas.FindAsync(id);
             if (venta == null) return false;

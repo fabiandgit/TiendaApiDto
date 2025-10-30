@@ -43,11 +43,11 @@ namespace TiendaApiDto.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ProductoDto>> Update(long id, [FromBody] ProductoDto dto)
+        public async Task<ActionResult<ProductoDto>> Update(int id, [FromBody] ProductoDto dto)
         {
             if (id != dto.Id) return BadRequest("El ID no coincide");
 
-            var productoExistente = await _repository.GetByIdAsync((int)id);
+            var productoExistente = await _repository.GetByIdAsync(id);
             if (productoExistente == null) return NotFound();
 
             productoExistente.UpdateEntity(dto);
@@ -56,7 +56,7 @@ namespace TiendaApiDto.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(long id)
+        public async Task<ActionResult> Delete(int id)
         {
             var eliminado = await _repository.DeleteAsync(id);
             if (!eliminado) return NotFound();
