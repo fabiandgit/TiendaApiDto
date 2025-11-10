@@ -11,6 +11,8 @@ namespace TiendaApiDto.Data
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Venta> Ventas { get; set; }
 
+        public DbSet<Usuario> Usuarios { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configuración de relación: Producto → Ventas
