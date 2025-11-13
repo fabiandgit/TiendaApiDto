@@ -59,5 +59,13 @@ namespace TiendaApiDto.Controllers
             if (!eliminado) return NotFound();
             return NoContent();
         }
+
+
+        [HttpGet("paged")]
+        public async Task<ActionResult<PagedResult<EmpleadoDto>>> GetPaged([FromQuery] PaginationParams pagination)
+        {
+            var result = await _repository.GetPagedAsync(pagination);
+            return Ok(result);
+        }
     }
 }

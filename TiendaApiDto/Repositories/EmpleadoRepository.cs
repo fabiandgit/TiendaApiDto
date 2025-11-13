@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using TiendaApiDto.Data;
+using TiendaApiDto.Dtos;
 using TiendaApiDto.Entities;
+using TiendaApiDto.Mappers;
 
 namespace TiendaApiDto.Repositories
 {
@@ -54,6 +56,26 @@ namespace TiendaApiDto.Repositories
             _context.Empleados.Remove(empleado);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<PagedResult<EmpleadoDto>> GetPagedAsync(PaginationParams pagination)
+        {
+            var query = _context.Empleados.AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query.
+                              Skip((pagination.PageNumber -1) * pagination.PageSize).
+                              Take(pagination.PageSize).
+                              ToListAsync();
+
+            var itemsDto = items.Select((e) => e.ToDto());
+
+            return new PagedResult<EmpleadoDto>
+            {
+                Items = itemsDto,
+                TotalCount = totalCount
+            };
         }
     }
 }

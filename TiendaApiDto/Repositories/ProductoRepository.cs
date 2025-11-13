@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using TiendaApiDto.Data;
+using TiendaApiDto.Dtos;
 using TiendaApiDto.Entities;
+using TiendaApiDto.Mappers;
 using TiendaApiDto.Repositories;
 
 namespace TiendaApiDto.Repositories
@@ -59,5 +62,27 @@ namespace TiendaApiDto.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<PagedResult<ProductoDto>> GetPagedAsync(PaginationParams pagination)
+        {
+            //var query = _context.Productos.Include(p => p.Ventas).AsQueryable();
+            var query = _context.Productos.AsQueryable();
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+                .Take(pagination.PageSize)
+                .ToListAsync();
+
+            var itemsDto = items.Select(p => p.ToDto()).ToList();
+
+            return new PagedResult<ProductoDto>
+            {
+                Items = itemsDto,
+                TotalCount = totalCount
+            };
+        }
+
     }
+
 }

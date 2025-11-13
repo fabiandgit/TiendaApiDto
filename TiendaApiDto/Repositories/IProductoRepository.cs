@@ -11,5 +11,6 @@ namespace TiendaApiDto.Repositories
         Task<Producto> AddAsync(Producto producto);
         Task<Producto?> UpdateAsync(int id, Producto producto);
         Task<bool> DeleteAsync(int id);
+        Task<PagedResult<ProductoDto>> GetPagedAsync(PaginationParams pagination);
     }
 }

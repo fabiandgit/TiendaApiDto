@@ -10,6 +10,7 @@ namespace TiendaApiDto.Repositories
         Task<Empleado> AddAsync(Empleado empleado);
         Task<Empleado?> UpdateAsync(int id, Empleado empleado);
         Task<bool> DeleteAsync(int id);
+        Task<PagedResult<EmpleadoDto>> GetPagedAsync(PaginationParams pagination);
 
     }
 }
