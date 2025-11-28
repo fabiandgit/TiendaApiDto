@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OfficeOpenXml;
 using System;
 using System.Text;
 using TiendaApiDto.Data;
@@ -9,6 +10,7 @@ using TiendaApiDto.Mappers;
 using TiendaApiDto.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<TiendaApiContext>(options =>
@@ -80,5 +82,6 @@ app.UseCors("AllowAngularApp");
 app.UseAuthentication(); //  Verifica el token
 app.UseAuthorization();  //  Aplica reglas de acceso
 app.MapControllers();
+app.UseStaticFiles();
 
 app.Run();

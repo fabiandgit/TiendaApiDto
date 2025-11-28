@@ -12,5 +12,6 @@ namespace TiendaApiDto.Repositories
         Task<Producto?> UpdateAsync(int id, Producto producto);
         Task<bool> DeleteAsync(int id);
         Task<PagedResult<ProductoDto>> GetPagedAsync(PaginationParams pagination);
+        Task<(IEnumerable<Producto> productos, List<string> errores)> ImportFileExcel(IFormFile archivoExcel);      
     }
 }

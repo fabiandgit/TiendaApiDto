@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using TiendaApiDto.Dtos;
 using TiendaApiDto.Entities;
 using TiendaApiDto.Mappers;
@@ -69,6 +71,36 @@ namespace TiendaApiDto.Controllers
         {
             var result = await _repository.GetPagedAsync(pagination);
             return Ok(result);
+        }
+
+        [HttpGet("template")]
+        public IActionResult DescargarPlantilla()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Plantillas", "PlantillaProductos.xlsx");
+
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("Archivo no encontrado");
+
+            var MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return PhysicalFile(filePath, MIME, "PlantillaProductos.xlsx");
+        }
+
+        [HttpPost("import")]
+        public async Task<IActionResult> ImportExcel(IFormFile archivoExcel)
+        {
+            if (archivoExcel == null || archivoExcel.Length == 0)
+                return BadRequest("Archivo no válido");
+
+            var (productos, errores) = await _repository.ImportFileExcel(archivoExcel);
+            var productosDto = productos.Select(p => p.ToDto());
+
+            return Ok(new
+            {
+                mensaje = errores.Any() ? "Importación completada con advertencias" : "Importación exitosa",
+                cantidad = productosDto.Count(),
+                productos = productosDto,
+                errores = errores
+            });
         }
     }
 }
